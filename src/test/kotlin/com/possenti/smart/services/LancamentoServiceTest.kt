@@ -18,6 +18,7 @@ import kotlin.jvm.Throws
 @SpringBootTest
 class LancamentoServiceTest {
 
+// TODO: change here
 //    @MockBean
 //    private val funcionarioRepository: FuncionarioRepository? = null
 //
