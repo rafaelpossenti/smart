@@ -3,12 +3,12 @@ package com.possenti.smart.services
 import com.possenti.smart.documents.Empresa
 import com.possenti.smart.repositories.EmpresaRepository
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.test.context.event.annotation.BeforeTestClass
 import kotlin.jvm.Throws
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -22,7 +22,7 @@ class EmpresaServiceTest {
 
     private val CNPJ = "23690176000118"
 
-    @BeforeTestClass
+    @BeforeEach
     @Throws(Exception::class)
     fun setUp() {
         BDDMockito.given(empresaRepository?.findByCnpj(CNPJ)).willReturn(empresa())
