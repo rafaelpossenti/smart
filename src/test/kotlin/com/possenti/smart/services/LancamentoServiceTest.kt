@@ -1,9 +1,8 @@
 package com.possenti.smart.services
 
-import com.possenti.smart.documents.Funcionario
-import com.possenti.smart.enums.PerfilEnum
-import com.possenti.smart.repositories.FuncionarioRepository
-import com.possenti.smart.utils.SenhaUtils
+import com.possenti.smart.documents.Lancamento
+import com.possenti.smart.enums.TipoEnum
+import com.possenti.smart.repositories.LancamentoRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,59 +11,53 @@ import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.jvm.Throws
 
 @SpringBootTest
 class LancamentoServiceTest {
 
-// TODO: change here test 2
-//    @MockBean
-//    private val funcionarioRepository: FuncionarioRepository? = null
-//
-//    @Autowired
-//    private val funcionarioService: FuncionarioService? = null
-//
-//    private val email: String = "email@email.com"
-//    private val cpf: String = "24397069069"
-//    private val id: String = "1"
-//
-//    @BeforeEach
-//    @Throws(Exception::class)
-//    fun setUp() {
-//        BDDMockito.given(funcionarioRepository?.save(Mockito.any(Funcionario::class.java)))
-//                .willReturn(funcionario())
-//        BDDMockito.given(funcionarioRepository?.findById(id)).willReturn(Optional.of(funcionario()))
-//        BDDMockito.given(funcionarioRepository?.findByEmail(email)).willReturn(funcionario())
-//        BDDMockito.given(funcionarioRepository?.findByCpf(cpf)).willReturn(funcionario())
-//
-//    }
-//
-//    @Test
-//    fun `testa se ao salvar funcionario nao retorna null`() {
-//        val funcionario: Funcionario? = funcionarioService?.persistir(funcionario())
-//        Assertions.assertNotNull(funcionario)
-//    }
-//
-//    @Test
-//    fun `testa se a busca de funcionario por cpf nao retorna null quando existir valor`() {
-//        val funcionario: Funcionario? = funcionarioService?.buscarPorCpf(cpf)
-//        Assertions.assertNotNull(funcionario)
-//    }
-//
-//    @Test
-//    fun `testa se a busca de funcionario por email nao retorna null quando existir valor`() {
-//        val funcionario: Funcionario? = funcionarioService?.buscarPorEmail(email)
-//        Assertions.assertNotNull(funcionario)
-//    }
-//
-//    @Test
-//    fun `testa se a busca de funcionario por id nao retorna null quando existir valor`() {
-//        val funcionario: Funcionario? = funcionarioService?.buscarPorId(id)
-//        Assertions.assertNotNull(funcionario)
-//    }
-//
-//    private fun funcionario() =
-//            Funcionario("Nome", email, SenhaUtils().gerarBCrypt("123456"),
-//            cpf, PerfilEnum.ROLE_USUARIO, id)
+    @MockBean
+    private val lancamentoRepository: LancamentoRepository? = null
+
+    @Autowired
+    private val lancamentoService: LancamentoService? = null
+
+    private val id: String = "1"
+
+    @BeforeEach
+    @Throws(Exception::class)
+    fun setUp() {
+        BDDMockito
+                .given<Page<Lancamento>>(lancamentoRepository?.findByFuncionarioId(id, PageRequest.of(0, 10)))
+                .willReturn(PageImpl(ArrayList<Lancamento>()))
+        BDDMockito.given(lancamentoRepository?.findById(id)).willReturn(Optional.of(lancamento()))
+        BDDMockito.given(lancamentoRepository?.save(Mockito.any(Lancamento::class.java)))
+                .willReturn(lancamento())
+
+    }
+
+    @Test
+    fun `testa se ao salvar lancamento nao retorna null`() {
+        val lancamento: Lancamento? = lancamentoService?.persistir(lancamento())
+        Assertions.assertNotNull(lancamento)
+    }
+
+    @Test
+    fun `testa se a busca de lancamento funcionarioId nao retorna null quando existir valor`() {
+        val lancamento: Page<Lancamento>? = lancamentoService?.buscarPorFuncionarioId(id, PageRequest.of(0, 10))
+        Assertions.assertNotNull(lancamento)
+    }
+
+    @Test
+    fun `testa se a busca de lancamento por id nao retorna null quando existir valor`() {
+        val lancamento: Lancamento? = lancamentoService?.buscarPorId(id)
+        Assertions.assertNotNull(lancamento)
+    }
+
+    private fun lancamento() = Lancamento(Date(), TipoEnum.INICIO_TRABALHO, id)
 }
