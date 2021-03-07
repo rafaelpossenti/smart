@@ -82,24 +82,24 @@ class LancamentoController(val lancamentoService: LancamentoService,
         return ResponseEntity.ok(response)
     }
 
-//    @PutMapping("/{id}")
-//    fun atualizar(@PathVariable("id") id: String, @Valid @RequestBody lancamentoDto: LancamentoDto,
-//                  result: BindingResult): ResponseEntity<Response<LancamentoDto>> {
-//
-//        val response: Response<LancamentoDto> = Response<LancamentoDto>()
-//        validarFuncionario(lancamentoDto, result)
-//        lancamentoDto.id = id
-//        val lancamento: Lancamento = converterDtoParaLancamento(lancamentoDto, result)
-//
-//        if (result.hasErrors()) {
-//            result.allErrors.forEach { erro -> erro.defaultMessage?.let { response.erros.add(it) } }
-//            return ResponseEntity.badRequest().body(response)
-//        }
-//
-//        lancamentoService.persistir(lancamento)
-//        response.data = converterLancamentoDto(lancamento)
-//        return ResponseEntity.ok(response)
-//    }
+    @PutMapping("/{id}")
+    fun atualizar(@PathVariable("id") id: String, @Valid @RequestBody lancamentoDto: LancamentoDto,
+                  result: BindingResult): ResponseEntity<Response<LancamentoDto>> {
+
+        val response: Response<LancamentoDto> = Response<LancamentoDto>()
+        validarFuncionario(lancamentoDto, result)
+        lancamentoDto.id = id
+        val lancamento: Lancamento = converterDtoParaLancamento(lancamentoDto, result)
+
+        if (result.hasErrors()) {
+            result.allErrors.forEach { erro -> erro.defaultMessage?.let { response.erros.add(it) } }
+            return ResponseEntity.badRequest().body(response)
+        }
+
+        lancamentoService.persistir(lancamento)
+        response.data = converterLancamentoDto(lancamento)
+        return ResponseEntity.ok(response)
+    }
 
     @DeleteMapping(value = ["/{id}"])
     @PreAuthorize("hasAnyRole('ADMIN')")

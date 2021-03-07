@@ -18,21 +18,22 @@ class SmartApplication(val empresaRepository: EmpresaRepository,
 		empresaRepository.deleteAll()
 		funcionarioRepository.deleteAll()
 
-		val empresa = Empresa("Empresa", "61957438000157")
-		empresaRepository.save(empresa)
-		val empresaDb = empresaRepository.findByCnpj("61957438000157")
+		var empresa = Empresa("Empresa", "61957438000157")
+		empresa = empresaRepository.save(empresa)
 
-		val admin = Funcionario("Admin", "admin@empresa.com",
+		var admin = Funcionario("Admin", "admin@empresa.com",
 				SenhaUtils().gerarBCrypt("123456"), "44579798058",
-				PerfilEnum.ROLE_ADMIN, empresaDb?.id!!)
-		funcionarioRepository.save(admin)
+				PerfilEnum.ROLE_ADMIN, empresa.id!!)
+		admin = funcionarioRepository.save(admin)
 
-		val funcionario = Funcionario("Funcionario", "funcionario@empresa.com",
+		var funcionario = Funcionario("Funcionario", "funcionario@empresa.com",
 				SenhaUtils().gerarBCrypt("123456"), "86802539012",
-				PerfilEnum.ROLE_USUARIO, empresaDb.id)
-		funcionarioRepository.save(funcionario)
+				PerfilEnum.ROLE_USUARIO, empresa.id!!)
+		funcionario = funcionarioRepository.save(funcionario)
 
-		println("empresa id:  ${empresaDb.id} ")
+		println("empresa id:  ${empresa.id} ")
+		println("admin id:  ${admin.id} ")
+		println("funcionario id:  ${funcionario.id} ")
 
 	}
 
