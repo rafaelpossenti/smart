@@ -3,6 +3,8 @@ package com.possenti.smart.services.impl
 import com.possenti.smart.documents.User
 import com.possenti.smart.repositories.UserRepository
 import com.possenti.smart.services.UserService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,4 +15,6 @@ class UserServiceImpl(val userRepository: UserRepository) : UserService {
     override fun findByEmail(email: String) = userRepository.findByEmail(email)
 
     override fun findById(id: String) = userRepository.findById(id).orElse(null)
+
+    override fun findAll(pageRequest: PageRequest) = userRepository.findAll(pageRequest)
 }
