@@ -1,8 +1,6 @@
 package com.possenti.smart.controllers
 
-import com.possenti.smart.documents.Lancamento
 import com.possenti.smart.documents.User
-import com.possenti.smart.dtos.LancamentoDto
 import com.possenti.smart.dtos.UserDto
 import com.possenti.smart.response.Response
 import com.possenti.smart.services.UserService
@@ -17,7 +15,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/smart/users")
-class UserController(val userServce: UserService) {
+class UserController(val userService: UserService) {
 
     @Value("\${paginacao.qtd_por_pagina}")
     val qtdPorPagina: Int = 15
@@ -27,7 +25,19 @@ class UserController(val userServce: UserService) {
                   result: BindingResult): ResponseEntity<Response<User>> {
         val response: Response<User> = Response()
 
-        userServce.save(user)
+        userService.save(user)
+        response.data = user
+
+        return ResponseEntity.ok(response)
+    }
+
+    @PutMapping("/{id}")
+    fun update(@PathVariable("id") id: String,
+               @Valid @RequestBody user: User,
+             result: BindingResult): ResponseEntity<Response<User>> {
+        val response: Response<User> = Response()
+
+        userService.update(id, user)
         response.data = user
 
         return ResponseEntity.ok(response)
@@ -42,7 +52,7 @@ class UserController(val userServce: UserService) {
         val response: Response<Page<UserDto>> = Response()
 
         val pageRequest: PageRequest = PageRequest.of(pag, qtdPorPagina, Sort.Direction.valueOf(dir), ord)
-        val users = userServce.findAll(pageRequest)
+        val users = userService.findAll(pageRequest)
 
         val usersDto: Page<UserDto> =
                 users.map { lancamento -> convertUserDto(lancamento) }

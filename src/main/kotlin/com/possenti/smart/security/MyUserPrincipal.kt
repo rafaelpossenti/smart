@@ -1,25 +1,25 @@
 package com.possenti.smart.security
 
-import com.possenti.smart.documents.Funcionario
+import com.possenti.smart.documents.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class FuncionarioPrincipal(val funcionario: Funcionario) : UserDetails {
+class MyUserPrincipal(val user: User) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         val authorities: MutableCollection<GrantedAuthority> = mutableListOf<GrantedAuthority>()
-        authorities.add(SimpleGrantedAuthority(funcionario.perfil.toString()))
+        authorities.add(SimpleGrantedAuthority(user.perfil.toString()))
         return authorities
     }
 
     override fun isEnabled(): Boolean = true
 
-    override fun getUsername(): String = funcionario.email
+    override fun getUsername(): String = user.email
 
     override fun isCredentialsNonExpired(): Boolean = true
 
-    override fun getPassword(): String = funcionario.senha
+    override fun getPassword(): String = user.password!!
 
     override fun isAccountNonExpired(): Boolean = true
 

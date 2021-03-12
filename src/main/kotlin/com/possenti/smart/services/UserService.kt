@@ -6,7 +6,9 @@ import org.springframework.data.domain.PageRequest
 
 interface UserService {
 
-    fun save(funcionario: User): User
+    fun save(user: User): User
+
+    fun update(id: String, user: User): User
 
     fun findByEmail(email: String): User?
 
