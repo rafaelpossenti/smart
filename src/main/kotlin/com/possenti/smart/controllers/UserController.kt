@@ -4,18 +4,22 @@ import com.possenti.smart.documents.User
 import com.possenti.smart.dtos.UserDto
 import com.possenti.smart.response.Response
 import com.possenti.smart.services.UserService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
+import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.client.RestTemplate
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/smart/users")
-class UserController(val userService: UserService) {
+class UserController(val userService: UserService,
+                     val client: RestTemplate) {
 
     @Value("\${paginacao.qtd_por_pagina}")
     val qtdPorPagina: Int = 15
@@ -48,6 +52,9 @@ class UserController(val userService: UserService) {
             @RequestParam(value = "ord", defaultValue = "id") ord: String,
             @RequestParam(value = "dir", defaultValue = "DESC") dir: String):
             ResponseEntity<Response<Page<UserDto>>> {
+
+//        val returno = client.exchange("http://post/api/post/posts", HttpMethod.GET, null, String.javaClass)
+//        println("***************** return: ${returno} :**********************")
 
         val response: Response<Page<UserDto>> = Response()
 

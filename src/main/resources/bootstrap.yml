@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: smart
+  profiles:
+    active: development
+  cloud:
+    config:
+      fail-fast: true
+      uri:
+        - http://localhost:8888

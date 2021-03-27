@@ -39,7 +39,7 @@ class CadastroPFController(val empresaService: EmpresaService,
         var funcionario: Funcionario = converterDtoParaFuncionario(cadastroPFDto, empresa!!)
 
         funcionario = funcionarioService.persistir(funcionario)
-        response.data = converterCadastroPFDto(funcionario, empresa!!)
+        response.data = converterCadastroPFDto(funcionario, empresa)
 
         return ResponseEntity.ok(response)
     }
