@@ -29,6 +29,8 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
+//	implementation("org.springframework.cloud:spring-cloud-starter-netflix-hystrix")
+//	implementation("com.netflix.hystrix:hystrix-core")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

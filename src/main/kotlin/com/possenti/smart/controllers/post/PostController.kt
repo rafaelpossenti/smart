@@ -2,6 +2,7 @@ package com.possenti.smart.controllers.post
 
 import com.possenti.smart.client.PostClient
 import com.possenti.smart.dtos.post.PostDto
+import com.possenti.smart.services.post.PostService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
@@ -11,29 +12,20 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/smart/posts")
-class PostController(val postClient: PostClient) {
+class PostController(val postService: PostService) {
 
     @PostMapping
     fun save(@Valid @RequestBody post: PostDto)  {
-        post.userId = this.getUserName()
-        postClient.save(post)
+        postService.save(post)
     }
 
     @GetMapping
     fun findByUserId(@RequestParam(value = "pag", defaultValue = "0") pag: Int,
                      @RequestParam(value = "ord", defaultValue = "id") ord: String,
                      @RequestParam(value = "dir", defaultValue = "DESC") dir: String) : ResponseEntity<List<PostDto>> {
-        val userId = this.getUserName()
-        return postClient.get(pag, ord, dir, userId)
+        return postService.findByUserId(pag, ord, dir)
     }
 
-    private fun getUserName() : String {
-        val principal = SecurityContextHolder.getContext().authentication.principal
-        return if (principal is UserDetails) {
-            principal.username
-        } else {
-            principal.toString()
-        }
-    }
+
 
 }
