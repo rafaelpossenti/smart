@@ -28,7 +28,7 @@ class WebSecurity(
         http.csrf().disable()
         http.authorizeRequests()
                 .antMatchers("/users/login").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and()
                 .addFilter(getAuthenticationFilter())
         http.headers().frameOptions().disable();

@@ -67,6 +67,13 @@ class UserController(val userService: UserService) {
         return ResponseEntity.ok(response)
     }
 
+    @GetMapping("/{id}/exists")
+    fun exists(@PathVariable("id") id: String,) : ResponseEntity<Boolean> {
+        val exists = userService.findByEmail(id) != null
+        return ResponseEntity.ok(exists)
+    }
+
+
     private fun convertUserDto(user: User) =
             UserDto(user.email, user.name, user.perfil, user.id)
 
