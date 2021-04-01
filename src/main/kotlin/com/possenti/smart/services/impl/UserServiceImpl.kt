@@ -10,7 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl(val userRepository: UserRepository) : UserService {
+class UserServiceImpl(
+        val userRepository: UserRepository
+) : UserService {
 
     val LOGGER = LoggerFactory.getLogger(UserServiceImpl::class.java)
 

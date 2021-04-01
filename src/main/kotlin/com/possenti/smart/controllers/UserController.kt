@@ -14,15 +14,21 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/api/smart/users")
+@RequestMapping("/users")
 class UserController(val userService: UserService) {
 
     @Value("\${paginacao.qtd_por_pagina}")
     val qtdPorPagina: Int = 15
 
+    @GetMapping("/status/check")
+    fun status() = "working"
+
+    @GetMapping("/status/active")
+    fun test() = "active"
+
     @PostMapping
     fun save(@Valid @RequestBody user: User,
-                  result: BindingResult): ResponseEntity<Response<User>> {
+             result: BindingResult): ResponseEntity<Response<User>> {
         val response: Response<User> = Response()
 
         userService.save(user)
