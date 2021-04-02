@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.possenti.smart.documents.Funcionario
 import com.possenti.smart.documents.Lancamento
-import com.possenti.smart.dtos.LancamentoDto
+import com.possenti.smart.dto.LancamentoDto
 import com.possenti.smart.enums.PerfilEnum
 import com.possenti.smart.enums.TipoEnum
 import com.possenti.smart.services.FuncionarioService

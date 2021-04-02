@@ -1,4 +1,4 @@
-package com.possenti.smart.dtos
+package com.possenti.smart.dto
 
 data class EmpresaDto(
         val razaoSocial: String,

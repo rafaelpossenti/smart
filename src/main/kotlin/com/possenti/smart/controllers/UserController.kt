@@ -1,15 +1,15 @@
 package com.possenti.smart.controllers
 
 import com.possenti.smart.documents.User
-import com.possenti.smart.dtos.UserDto
-import com.possenti.smart.response.Response
+import com.possenti.smart.dto.user.UserDto
+import com.possenti.smart.dto.user.UserSaveDto
+import com.possenti.smart.dto.user.UserUpdateDto
 import com.possenti.smart.services.UserService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -23,56 +23,55 @@ class UserController(val userService: UserService) {
     @GetMapping("/status/check")
     fun status() = "working"
 
-    @GetMapping("/status/active")
-    fun test() = "active"
-
     @PostMapping
-    fun save(@Valid @RequestBody user: User,
-             result: BindingResult): ResponseEntity<Response<User>> {
-        val response: Response<User> = Response()
+    fun insert(@Valid @RequestBody user: UserSaveDto): ResponseEntity<User> {
 
-        userService.save(user)
-        response.data = user
+        val userDb = userService.save(user)
 
-        return ResponseEntity.ok(response)
+        return ResponseEntity.ok(userDb)
     }
 
     @PutMapping("/{id}")
     fun update(@PathVariable("id") id: String,
-               @Valid @RequestBody user: User,
-             result: BindingResult): ResponseEntity<Response<User>> {
-        val response: Response<User> = Response()
+               @Valid @RequestBody user: UserUpdateDto): ResponseEntity<User> { //DTO
 
-        userService.update(id, user)
-        response.data = user
+        val userDb = userService.update(id, user)
 
-        return ResponseEntity.ok(response)
+        return ResponseEntity.ok(userDb)
+    }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable("id") id: String): ResponseEntity<User> {
+        userService.delete(id)
+        return ResponseEntity.ok().build()
+    }
+
+    @GetMapping("/{id}")
+    fun findById(@PathVariable("id") id: String): ResponseEntity<UserDto> {
+        val user = userService.findById(id) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(convertUserDto(user))
     }
 
     @GetMapping
-    fun get(@RequestParam(value = "pag", defaultValue = "0") pag: Int,
-            @RequestParam(value = "ord", defaultValue = "id") ord: String,
-            @RequestParam(value = "dir", defaultValue = "DESC") dir: String):
-            ResponseEntity<Response<Page<UserDto>>> {
-
-        val response: Response<Page<UserDto>> = Response()
+    fun findAll(@RequestParam(value = "pag", defaultValue = "0") pag: Int,
+                @RequestParam(value = "ord", defaultValue = "id") ord: String,
+                @RequestParam(value = "dir", defaultValue = "DESC") dir: String):
+            ResponseEntity<Page<UserDto>> {
 
         val pageRequest: PageRequest = PageRequest.of(pag, qtdPorPagina, Sort.Direction.valueOf(dir), ord)
         val users = userService.findAll(pageRequest)
 
         val usersDto: Page<UserDto> =
-                users.map { lancamento -> convertUserDto(lancamento) }
+                users.map { user -> convertUserDto(user) }
 
-        response.data = usersDto
-        return ResponseEntity.ok(response)
+        return ResponseEntity.ok(usersDto)
     }
 
     @GetMapping("/{id}/exists")
     fun exists(@PathVariable("id") id: String,) : ResponseEntity<Boolean> {
-        val exists = userService.findByEmail(id) != null
+        val exists = userService.findById(id) != null
         return ResponseEntity.ok(exists)
     }
-
 
     private fun convertUserDto(user: User) =
             UserDto(user.email, user.name, user.perfil, user.id)

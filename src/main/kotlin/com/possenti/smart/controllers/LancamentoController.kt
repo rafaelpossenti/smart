@@ -2,7 +2,7 @@ package com.possenti.smart.controllers
 
 import com.possenti.smart.documents.Funcionario
 import com.possenti.smart.documents.Lancamento
-import com.possenti.smart.dtos.LancamentoDto
+import com.possenti.smart.dto.LancamentoDto
 import com.possenti.smart.enums.TipoEnum
 import com.possenti.smart.response.Response
 import com.possenti.smart.services.FuncionarioService

@@ -1,7 +1,7 @@
 package com.possenti.smart.controllers
 
 import com.possenti.smart.documents.Funcionario
-import com.possenti.smart.dtos.FuncionarioDto
+import com.possenti.smart.dto.FuncionarioDto
 import com.possenti.smart.response.Response
 import com.possenti.smart.services.FuncionarioService
 import com.possenti.smart.utils.SenhaUtils

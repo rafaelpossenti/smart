@@ -1,14 +1,18 @@
 package com.possenti.smart.services
 
 import com.possenti.smart.documents.User
+import com.possenti.smart.dto.user.UserSaveDto
+import com.possenti.smart.dto.user.UserUpdateDto
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 
 interface UserService {
 
-    fun save(user: User): User
+    fun save(user: UserSaveDto): User
 
-    fun update(id: String, user: User): User
+    fun update(id: String, user: UserUpdateDto): User
+
+    fun delete(id: String)
 
     fun findByEmail(email: String): User?
 

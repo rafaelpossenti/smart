@@ -1,4 +1,4 @@
-package com.possenti.smart.dtos
+package com.possenti.smart.dto
 
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.br.CNPJ

@@ -1,4 +1,4 @@
-package com.possenti.smart.dtos
+package com.possenti.smart.dto
 
 import javax.validation.constraints.NotEmpty
 

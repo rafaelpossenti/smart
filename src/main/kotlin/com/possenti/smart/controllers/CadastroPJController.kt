@@ -2,7 +2,7 @@ package com.possenti.smart.controllers
 
 import com.possenti.smart.documents.Empresa
 import com.possenti.smart.documents.Funcionario
-import com.possenti.smart.dtos.CadastroPJDto
+import com.possenti.smart.dto.CadastroPJDto
 import com.possenti.smart.enums.PerfilEnum
 import com.possenti.smart.response.Response
 import com.possenti.smart.services.EmpresaService

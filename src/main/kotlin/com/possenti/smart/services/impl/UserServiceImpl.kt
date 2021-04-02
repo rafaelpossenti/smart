@@ -1,6 +1,9 @@
 package com.possenti.smart.services.impl
 
 import com.possenti.smart.documents.User
+import com.possenti.smart.dto.user.UserDto
+import com.possenti.smart.dto.user.UserSaveDto
+import com.possenti.smart.dto.user.UserUpdateDto
 import com.possenti.smart.repositories.UserRepository
 import com.possenti.smart.services.UserService
 import org.slf4j.LoggerFactory
@@ -16,24 +19,29 @@ class UserServiceImpl(
 
     val LOGGER = LoggerFactory.getLogger(UserServiceImpl::class.java)
 
-    override fun save(user: User): User {
+    override fun save(dto: UserSaveDto): User {
         LOGGER.info("saving a new user")
+        val user = convertUserSaveDtoToUser(dto)
         user.password = BCryptPasswordEncoder().encode(user.password)
         return userRepository.save(user)
     }
 
-    override fun update(id: String, user: User): User {
+    override fun update(id: String, dto: UserUpdateDto): User {
 
         LOGGER.info("updating a user with id: $id")
 
         val userDb = userRepository.findById(id).orElse(null) ?: throw IllegalArgumentException("Usuário não encontrado")
 
-        if (user.password != null) {
-            userDb.password = BCryptPasswordEncoder().encode(user.password)
+        if (dto.password != null) {
+            userDb.password = BCryptPasswordEncoder().encode(dto.password)
         }
-        if (user.name != null) userDb.name = user.name
+        if (dto.name != null) userDb.name = dto.name
 
         return userRepository.save(userDb)
+    }
+
+    override fun delete(id: String) {
+        userRepository.deleteById(id)
     }
 
     override fun findByEmail(email: String) = userRepository.findByEmail(email)
@@ -44,4 +52,7 @@ class UserServiceImpl(
         LOGGER.info("getting all users")
         return userRepository.findAll(pageRequest)
     }
+
+    private fun convertUserSaveDtoToUser(user: UserSaveDto) =
+            User(user.name, user.email, user.password, user.perfil, null)
 }

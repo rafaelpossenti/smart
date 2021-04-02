@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document
-data class User (
+data class User(
         var name: String? = null,
         val email: String,
         var password: String? = null,

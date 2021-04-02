@@ -1,7 +1,7 @@
 package com.possenti.smart.controllers
 
 import com.possenti.smart.documents.Empresa
-import com.possenti.smart.dtos.EmpresaDto
+import com.possenti.smart.dto.EmpresaDto
 import com.possenti.smart.response.Response
 import com.possenti.smart.services.EmpresaService
 import org.springframework.http.ResponseEntity
