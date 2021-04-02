@@ -1,0 +1,224 @@
+swagger: '2.0'
+
+
+
+host: localhost:5555
+
+info:
+  version: 1.0.0
+  title: Networking app
+  description: social netWorking By localization
+  contact:
+    name: Rafael Possenti
+    email: rafael_possenti@hotmail.com
+tags:
+- name: "users"
+  description: "network users"
+schemes:
+  - http
+  - https
+paths:
+  '/users':
+    post:
+      tags:
+      - "users"
+      summary: insert a new user
+      description: insert a new user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      operationId: insertUser
+      parameters:
+        - in: body
+          name: users_
+          schema:
+            $ref: '#/definitions/UserInsertDTO'
+      responses:
+        201:
+          description: OK
+        400:
+          description: Bad request
+        500:
+          description: server error
+    get:
+      tags:
+      - "users"
+      summary: get all users 
+      description: get all users
+      operationId: getAllUser
+      parameters: 
+        - in: query
+          name: pag
+          schema:
+            type: string
+          description: page number
+        - in: query
+          name: ord
+          schema:
+            type: string
+          description: field to order
+        - in: query
+          name: dir
+          schema:
+            type: string
+          description: ASC or DESC
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/AllUserGetDTO'
+        400:
+          description: Bad request
+        500:
+          description: server error
+  /users/{id}:  
+    put:
+      tags:
+      - "users"
+      summary: update an user
+      description: update an user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: "ID of user to be updated"
+          required: true
+          type: "string"
+        - in: body
+          name: users_
+          schema:
+            $ref: '#/definitions/UserUpdateDTO'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad request
+        500:
+          description: server error
+    delete:
+      tags:
+      - "users"
+      summary: delete an user 
+      description: delete an user
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: "ID of user to be deleted"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad request
+        500:
+          description: server error
+    get:
+      tags:
+      - "users"
+      summary: get an user 
+      description: get an user
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          description: "ID of user to be found"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/UserGetDTO'
+        400:
+          description: Bad request
+        500:
+          description: server error
+  /users/{id}/exists:  
+    get:
+      tags:
+      - "users"
+      summary: returns if an user exists 
+      description: returns if an user exists 
+      operationId: existsUser
+      parameters:
+        - name: id
+          in: path
+          description: "ID of user to be validated"
+          required: true
+          type: "string"
+        - in: body
+          name: users_
+          schema:
+            $ref: '#/definitions/existsDTO'
+      responses:
+        200:
+          description: OK
+          schema:
+            value:
+              type: boolean
+              example: "false"
+        400:
+          description: Bad request
+        500:
+          description: server error  
+
+definitions:
+  UserInsertDTO:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Joao santos
+      password:
+        type: string
+        format: password
+        example: senha123
+      perfil:
+        type: string
+        enum:
+        - ROLE_ADMIN
+        - ROLE_USER
+  
+  UserUpdateDTO:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Joao santos
+      password:
+        type: string
+        format: password
+        example: senha123
+      
+  existsDTO:
+    type: string
+        
+  AllUserGetDTO:
+    type: array
+    items:
+      $ref: '#/definitions/UserGetDTO'
+      
+  UserGetDTO:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 606742702c936b568db58f29
+      name:
+        type: string
+        example: Joao santos
+      email:
+        type: string
+        example: joao@hotmail.com
+      perfil:
+        type: string
+        enum:
+        - ROLE_ADMIN
+        - ROLE_USER
