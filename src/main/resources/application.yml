@@ -10,3 +10,7 @@ token:
 login:
   url:
     path: /users/login
+
+server:
+  error:
+    include-stacktrace: never

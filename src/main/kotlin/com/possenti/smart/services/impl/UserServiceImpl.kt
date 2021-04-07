@@ -1,9 +1,9 @@
 package com.possenti.smart.services.impl
 
 import com.possenti.smart.documents.User
-import com.possenti.smart.dto.user.UserDto
 import com.possenti.smart.dto.user.UserSaveDto
 import com.possenti.smart.dto.user.UserUpdateDto
+import com.possenti.smart.exception.UserNotFoundException
 import com.possenti.smart.repositories.UserRepository
 import com.possenti.smart.services.UserService
 import org.slf4j.LoggerFactory
@@ -46,7 +46,7 @@ class UserServiceImpl(
 
     override fun findByEmail(email: String) = userRepository.findByEmail(email)
 
-    override fun findById(id: String) = userRepository.findById(id).orElse(null)
+    override fun findById(id: String) = userRepository.findById(id).orElseThrow { UserNotFoundException() }
 
     override fun findAll(pageRequest: PageRequest): Page<User> {
         LOGGER.info("getting all users")

@@ -48,8 +48,8 @@ class UserController(val userService: UserService) {
 
     @GetMapping("/{id}")
     fun findById(@PathVariable("id") id: String): ResponseEntity<UserDto> {
-        val user = userService.findById(id) ?: return ResponseEntity.badRequest().build()
-        return ResponseEntity.ok(convertUserDto(user))
+        val user = userService.findById(id)
+        return ResponseEntity.ok(convertUserDto(user!!))
     }
 
     @GetMapping
