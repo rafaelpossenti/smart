@@ -30,7 +30,7 @@ class UserServiceImpl(
 
         LOGGER.info("updating a user with id: $id")
 
-        val userDb = userRepository.findById(id).orElse(null) ?: throw IllegalArgumentException("Usuário não encontrado")
+        val userDb = this.findById(id)
 
         if (dto.password != null) {
             userDb.password = BCryptPasswordEncoder().encode(dto.password)
