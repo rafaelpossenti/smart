@@ -41,6 +41,7 @@ class UserServiceImpl(
     }
 
     override fun delete(id: String) {
+        this.findById(id)
         userRepository.deleteById(id)
     }
 
