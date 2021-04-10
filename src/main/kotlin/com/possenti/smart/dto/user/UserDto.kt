@@ -6,5 +6,6 @@ data class UserDto(
         val email: String,
         val name: String? = null,
         val perfil: PerfilEnum,
+        val image: String? = null,
         var id: String? = null
 )

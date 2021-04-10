@@ -5,6 +5,7 @@ import com.possenti.smart.dto.user.UserSaveDto
 import com.possenti.smart.dto.user.UserUpdateDto
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.web.multipart.MultipartFile
 
 interface UserService {
 
@@ -19,4 +20,6 @@ interface UserService {
     fun findById(id: String): User?
 
     fun findAll(pageRequest: PageRequest) : Page<User>
+
+    fun saveImage(id: String, file: MultipartFile)
 }

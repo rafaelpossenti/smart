@@ -5,12 +5,14 @@ import com.possenti.smart.dto.user.UserDto
 import com.possenti.smart.dto.user.UserSaveDto
 import com.possenti.smart.dto.user.UserUpdateDto
 import com.possenti.smart.services.UserService
+import com.possenti.smart.utils.FileSaver
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import javax.validation.Valid
 
 @RestController
@@ -68,12 +70,18 @@ class UserController(val userService: UserService) {
     }
 
     @GetMapping("/{id}/exists")
-    fun exists(@PathVariable("id") id: String,) : ResponseEntity<Boolean> {
+    fun exists(@PathVariable("id") id: String) : ResponseEntity<Boolean> {
         val exists = userService.findById(id) != null
         return ResponseEntity.ok(exists)
     }
 
+    @PostMapping("/{id}/image")
+    fun saveImage(@PathVariable("id") id: String,
+                  @RequestParam("file") file: MultipartFile) {
+        userService.saveImage(id, file)
+    }
+
     private fun convertUserDto(user: User) =
-            UserDto(user.email, user.name, user.perfil, user.id)
+            UserDto(user.email, user.name, user.perfil, user.image, user.id)
 
 }

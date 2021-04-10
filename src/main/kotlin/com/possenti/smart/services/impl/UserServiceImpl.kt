@@ -6,15 +6,18 @@ import com.possenti.smart.dto.user.UserUpdateDto
 import com.possenti.smart.exception.UserNotFoundException
 import com.possenti.smart.repositories.UserRepository
 import com.possenti.smart.services.UserService
+import com.possenti.smart.utils.FileSaver
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 
 @Service
 class UserServiceImpl(
-        val userRepository: UserRepository
+        val userRepository: UserRepository,
+        val fileSaver: FileSaver
 ) : UserService {
 
     val LOGGER = LoggerFactory.getLogger(UserServiceImpl::class.java)
@@ -54,6 +57,13 @@ class UserServiceImpl(
         return userRepository.findAll(pageRequest)
     }
 
+    override fun saveImage(id: String, file: MultipartFile) {
+        val user = this.findById(id)
+        val s3Object = fileSaver.write(file)
+        user.image = s3Object
+        userRepository.save(user)
+    }
+
     private fun convertUserSaveDtoToUser(user: UserSaveDto) =
-            User(user.name, user.email, user.password, user.perfil, null)
+            User(user.name, user.email, user.password, user.perfil, null,null)
 }
