@@ -9,8 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import java.io.IOException
-import java.util.*
+import java.util.Date
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -24,7 +23,6 @@ class AuthenticationFilter(
 
     override fun attemptAuthentication(req: HttpServletRequest,
                                        res: HttpServletResponse): Authentication {
-
             val creds: LoginRequestModel = ObjectMapper().readValue(req.inputStream, LoginRequestModel::class.java)
             return authentication.authenticate(
                     UsernamePasswordAuthenticationToken(
@@ -32,7 +30,6 @@ class AuthenticationFilter(
                             creds.password,
                             ArrayList())
             )
-
     }
 
     override fun successfulAuthentication(req: HttpServletRequest?,
@@ -50,6 +47,5 @@ class AuthenticationFilter(
                 .compact()
         res.addHeader("token", token)
         res.addHeader("userId", userDetails.username)
-
     }
 }

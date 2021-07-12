@@ -1,4 +1,4 @@
-package com.possenti.smart.services
+package com.possenti.smart.service
 
 import com.possenti.smart.documents.User
 import com.possenti.smart.dto.user.UserSaveDto
@@ -19,10 +19,10 @@ class UserService(
         val fileSaver: FileSaver
 ) {
 
-    val LOGGER = LoggerFactory.getLogger(UserService::class.java)
+    val log = LoggerFactory.getLogger(UserService::class.java)
 
     fun save(dto: UserSaveDto): User {
-        LOGGER.info("saving a new user")
+        log.info("saving a new user")
         val user = convertUserSaveDtoToUser(dto)
         user.password = BCryptPasswordEncoder().encode(user.password)
         return userRepository.save(user)
@@ -30,7 +30,7 @@ class UserService(
 
     fun update(email: String, dto: UserUpdateDto): User {
 
-        LOGGER.info("updating a user with email: $email")
+        log.info("updating a user with email: $email")
 
         val userDb = this.findByEmail(email)
 
@@ -50,7 +50,7 @@ class UserService(
     fun findByEmail(email: String) = userRepository.findByEmail(email) ?: throw UserNotFoundException()
 
     fun findAll(pageRequest: PageRequest): Page<User> {
-        LOGGER.info("getting all users")
+        log.info("getting all users")
         return userRepository.findAll(pageRequest)
     }
 

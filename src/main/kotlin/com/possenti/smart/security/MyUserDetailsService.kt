@@ -1,6 +1,6 @@
 package com.possenti.smart.security
 
-import com.possenti.smart.services.UserService
+import com.possenti.smart.service.UserService
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
@@ -15,16 +15,13 @@ class MyUserDetailsService(val userService: UserService) : UserDetailsService {
     override fun loadUserByUsername(username: String?): UserDetails {
         if (username != null) {
             val user = userService.findByEmail(username)
-            if (user != null) {
-                return User(user.email,
-                        user.password,
-                        true,
-                        true,
-                        true,
-                        true,
-                        mutableListOf<GrantedAuthority>(SimpleGrantedAuthority(user.perfil.toString())))
-//                return MyUserPrincipal(user)
-            }
+            return User(user.email,
+                    user.password,
+                    true,
+                    true,
+                    true,
+                    true,
+                    mutableListOf<GrantedAuthority>(SimpleGrantedAuthority(user.perfil.toString())))
         }
         throw UsernameNotFoundException(username)
     }

@@ -1,4 +1,4 @@
-package com.possenti.smart.services
+package com.possenti.smart.service
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

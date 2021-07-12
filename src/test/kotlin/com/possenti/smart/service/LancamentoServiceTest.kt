@@ -1,8 +1,5 @@
-package com.possenti.smart.services
+package com.possenti.smart.service
 
-import com.possenti.smart.documents.Lancamento
-import com.possenti.smart.enums.TipoEnum
-import com.possenti.smart.repositories.LancamentoRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

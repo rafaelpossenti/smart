@@ -1,8 +1,6 @@
-package com.possenti.smart.services
+package com.possenti.smart.service
 
-import com.possenti.smart.documents.Funcionario
 import com.possenti.smart.enums.PerfilEnum
-import com.possenti.smart.repositories.FuncionarioRepository
 import com.possenti.smart.utils.SenhaUtils
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach

@@ -1,10 +1,10 @@
-package com.possenti.smart.controllers
+package com.possenti.smart.controller
 
 import com.possenti.smart.documents.User
 import com.possenti.smart.dto.user.UserDto
 import com.possenti.smart.dto.user.UserSaveDto
 import com.possenti.smart.dto.user.UserUpdateDto
-import com.possenti.smart.services.UserService
+import com.possenti.smart.service.UserService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest

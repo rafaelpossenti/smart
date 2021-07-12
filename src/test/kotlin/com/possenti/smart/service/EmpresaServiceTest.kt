@@ -1,7 +1,5 @@
-package com.possenti.smart.services
+package com.possenti.smart.service
 
-import com.possenti.smart.documents.Empresa
-import com.possenti.smart.repositories.EmpresaRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
