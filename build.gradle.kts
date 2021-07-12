@@ -31,6 +31,11 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 	implementation("org.springframework.cloud:spring-cloud-aws-context:2.2.6.RELEASE")
 
+	implementation("io.springfox:springfox-swagger2:2.4.0")
+	implementation("io.springfox:springfox-swagger-ui:2.4.0")
+
+
+
 	implementation("io.jsonwebtoken:jjwt:0.9.1")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

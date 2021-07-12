@@ -21,29 +21,22 @@ class UserController(val userService: UserService) {
     @Value("\${paginacao.qtd_por_pagina}")
     val qtdPorPagina: Int = 15
 
-    @GetMapping("/status/check")
-    fun status() = "working"
-
     @PostMapping
     fun insert(@Valid @RequestBody user: UserSaveDto): ResponseEntity<User> {
-
         val userDb = userService.save(user)
-
         return ResponseEntity.ok(userDb)
     }
 
-    @PutMapping("/{id}")
-    fun update(@PathVariable("id") id: String,
+    @PutMapping("/{email}")
+    fun update(@PathVariable("email") email: String,
                @Valid @RequestBody user: UserUpdateDto): ResponseEntity<User> { //DTO
-
-        val userDb = userService.update(id, user)
-
+        val userDb = userService.update(email, user)
         return ResponseEntity.ok(userDb)
     }
 
-    @DeleteMapping("/{id}")
-    fun delete(@PathVariable("id") id: String): ResponseEntity<User> {
-        userService.delete(id)
+    @DeleteMapping("/{email}")
+    fun delete(@PathVariable("email") email: String): ResponseEntity<User> {
+        userService.delete(email)
         return ResponseEntity.ok().build()
     }
 
@@ -68,16 +61,10 @@ class UserController(val userService: UserService) {
         return ResponseEntity.ok(usersDto)
     }
 
-    @GetMapping("/{id}/exists")
-    fun exists(@RequestHeader("x-user-email") userEmail: String) : ResponseEntity<Boolean> {
-        val exists = userService.findByEmail(userEmail) != null
-        return ResponseEntity.ok(exists)
-    }
-
-    @PostMapping("/{id}/image")
-    fun saveImage(@PathVariable("id") id: String,
+    @PostMapping("/{email}/image")
+    fun saveImage(@PathVariable("email") email: String,
                   @RequestParam("file") file: MultipartFile) {
-        userService.saveImage(id, file)
+        userService.saveImage(email, file)
     }
 
     private fun convertUserDto(user: User) =
