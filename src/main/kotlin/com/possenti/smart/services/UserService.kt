@@ -17,8 +17,6 @@ interface UserService {
 
     fun findByEmail(email: String): User?
 
-    fun findById(id: String): User?
-
     fun findAll(pageRequest: PageRequest) : Page<User>
 
     fun saveImage(id: String, file: MultipartFile)

@@ -1,6 +1,5 @@
 package com.possenti.smart.security
 
-import com.possenti.smart.enums.PerfilEnum
 import com.possenti.smart.services.UserService
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority

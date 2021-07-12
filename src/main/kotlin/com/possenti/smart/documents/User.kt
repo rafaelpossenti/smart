@@ -1,7 +1,6 @@
 package com.possenti.smart.documents
 
 import com.possenti.smart.enums.PerfilEnum
-import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document
@@ -11,5 +10,5 @@ data class User(
         var password: String? = null,
         val perfil: PerfilEnum,
         var image: String? = null,
-        @Id val id: String? = null
+//        @Id val id: String? = null
 )

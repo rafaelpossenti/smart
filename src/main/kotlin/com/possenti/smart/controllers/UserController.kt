@@ -5,7 +5,6 @@ import com.possenti.smart.dto.user.UserDto
 import com.possenti.smart.dto.user.UserSaveDto
 import com.possenti.smart.dto.user.UserUpdateDto
 import com.possenti.smart.services.UserService
-import com.possenti.smart.utils.FileSaver
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -48,9 +47,9 @@ class UserController(val userService: UserService) {
         return ResponseEntity.ok().build()
     }
 
-    @GetMapping("/{id}")
-    fun findById(@PathVariable("id") id: String): ResponseEntity<UserDto> {
-        val user = userService.findById(id)
+    @GetMapping("/{email}")
+    fun findById(@PathVariable("email") email: String): ResponseEntity<UserDto> {
+        val user = userService.findByEmail(email)
         return ResponseEntity.ok(convertUserDto(user!!))
     }
 
@@ -70,8 +69,8 @@ class UserController(val userService: UserService) {
     }
 
     @GetMapping("/{id}/exists")
-    fun exists(@PathVariable("id") id: String) : ResponseEntity<Boolean> {
-        val exists = userService.findById(id) != null
+    fun exists(@RequestHeader("x-user-email") userEmail: String) : ResponseEntity<Boolean> {
+        val exists = userService.findByEmail(userEmail) != null
         return ResponseEntity.ok(exists)
     }
 
@@ -82,6 +81,6 @@ class UserController(val userService: UserService) {
     }
 
     private fun convertUserDto(user: User) =
-            UserDto(user.email, user.name, user.perfil, user.image, user.id)
+            UserDto(user.email, user.name, user.perfil, user.image)
 
 }

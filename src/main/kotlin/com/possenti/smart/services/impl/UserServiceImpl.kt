@@ -33,7 +33,7 @@ class UserServiceImpl(
 
         LOGGER.info("updating a user with id: $id")
 
-        val userDb = this.findById(id)
+        val userDb = this.findByEmail(id)
 
         if (dto.password != null) {
             userDb.password = BCryptPasswordEncoder().encode(dto.password)
@@ -44,13 +44,11 @@ class UserServiceImpl(
     }
 
     override fun delete(id: String) {
-        this.findById(id)
+        this.findByEmail(id)
         userRepository.deleteById(id)
     }
 
-    override fun findByEmail(email: String) = userRepository.findByEmail(email)
-
-    override fun findById(id: String) = userRepository.findById(id).orElseThrow { UserNotFoundException() }
+    override fun findByEmail(email: String) = userRepository.findByEmail(email) ?: throw UserNotFoundException()
 
     override fun findAll(pageRequest: PageRequest): Page<User> {
         LOGGER.info("getting all users")
@@ -58,12 +56,12 @@ class UserServiceImpl(
     }
 
     override fun saveImage(id: String, file: MultipartFile) {
-        val user = this.findById(id)
+        val user = this.findByEmail(id)
         val s3Object = fileSaver.write(file)
         user.image = s3Object
         userRepository.save(user)
     }
 
     private fun convertUserSaveDtoToUser(user: UserSaveDto) =
-            User(user.name, user.email, user.password, user.perfil, null,null)
+            User(user.name, user.email, user.password, user.perfil, null)
 }

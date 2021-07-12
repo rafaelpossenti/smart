@@ -13,6 +13,7 @@ class FileSaver (val amazonS3: AmazonS3) {
         const val BUCKET = "possenti-user"
     }
 
+    //TODO: change Bloquear acesso público
     fun write(file: MultipartFile) : String {
         amazonS3.putObject(
                 PutObjectRequest(BUCKET, file.originalFilename, file.inputStream, null)
