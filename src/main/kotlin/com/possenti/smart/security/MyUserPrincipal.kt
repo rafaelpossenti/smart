@@ -13,16 +13,16 @@ class MyUserPrincipal(val user: User) : UserDetails {
         return authorities
     }
 
-    override fun isEnabled(): Boolean = true
+    override fun isEnabled() = true
 
-    override fun getUsername(): String = user.email
+    override fun getUsername() = user.email
 
-    override fun isCredentialsNonExpired(): Boolean = true
+    override fun isCredentialsNonExpired() = true
 
-    override fun getPassword(): String = user.password!!
+    override fun getPassword() = user.password!!
 
-    override fun isAccountNonExpired(): Boolean = true
+    override fun isAccountNonExpired() = true
 
-    override fun isAccountNonLocked(): Boolean = true
+    override fun isAccountNonLocked() = true
 
 }
