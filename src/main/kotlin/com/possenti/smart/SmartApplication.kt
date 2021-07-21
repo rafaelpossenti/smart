@@ -3,10 +3,11 @@ package com.possenti.smart
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.cloud.openfeign.EnableFeignClients
+import org.springframework.data.web.config.EnableSpringDataWebSupport
 
 @SpringBootApplication
 @EnableFeignClients
-//TODO: use Resilience4j https://www.infoq.com/br/articles/spring-cloud-hystrix/
+@EnableSpringDataWebSupport
 class SmartApplication
 
 fun main(args: Array<String>) {

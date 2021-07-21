@@ -8,15 +8,15 @@ import com.possenti.smart.repositories.UserRepository
 import com.possenti.smart.utils.FileSaver
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 
 @Service
 class UserService(
-        val userRepository: UserRepository,
-        val fileSaver: FileSaver
+    val userRepository: UserRepository,
+    val fileSaver: FileSaver
 ) {
 
     val log = LoggerFactory.getLogger(UserService::class.java)
@@ -49,9 +49,9 @@ class UserService(
 
     fun findByEmail(email: String) = userRepository.findByEmail(email) ?: throw UserNotFoundException()
 
-    fun findAll(pageRequest: PageRequest): Page<User> {
+    fun findAll(pageable: Pageable): Page<User> {
         log.info("getting all users")
-        return userRepository.findAll(pageRequest)
+        return userRepository.findAll(pageable)
     }
 
     fun saveImage(id: String, file: MultipartFile) {
@@ -62,5 +62,5 @@ class UserService(
     }
 
     private fun convertUserSaveDtoToUser(user: UserSaveDto) =
-            User(user.name, user.email, user.password, user.perfil, null)
+        User(user.name, user.email, user.password, user.perfil, null)
 }

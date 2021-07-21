@@ -5,10 +5,8 @@ import com.possenti.smart.dto.user.UserDto
 import com.possenti.smart.dto.user.UserSaveDto
 import com.possenti.smart.dto.user.UserUpdateDto
 import com.possenti.smart.service.UserService
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -17,9 +15,6 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/users")
 class UserController(val userService: UserService) {
-
-    @Value("\${paginacao.qtd_por_pagina}")
-    val qtdPorPagina: Int = 15
 
     @PostMapping
     fun insert(@Valid @RequestBody user: UserSaveDto): ResponseEntity<User> {
@@ -47,16 +42,12 @@ class UserController(val userService: UserService) {
     }
 
     @GetMapping
-    fun findAll(@RequestParam(value = "pag", defaultValue = "0") pag: Int,
-                @RequestParam(value = "ord", defaultValue = "id") ord: String,
-                @RequestParam(value = "dir", defaultValue = "DESC") dir: String):
+    fun findAll(pageable: Pageable):
             ResponseEntity<Page<UserDto>> {
 
-        val pageRequest: PageRequest = PageRequest.of(pag, qtdPorPagina, Sort.Direction.valueOf(dir), ord)
-        val users = userService.findAll(pageRequest)
+        val users = userService.findAll(pageable)
 
-        val usersDto: Page<UserDto> =
-                users.map { user -> convertUserDto(user) }
+        val usersDto = users.map { user -> convertUserDto(user) }
 
         return ResponseEntity.ok(usersDto)
     }
